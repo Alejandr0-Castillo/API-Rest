@@ -1,0 +1,96 @@
+# Guía de Postman para la API de Tareas
+
+Esta guía te ayudará a probar los endpoints de la API usando Postman.
+
+## 1. Configuración
+- Crea una nueva colección en Postman.
+- En la pestaña "Authorization" de la colección, selecciona "Bearer Token" y pega el token que obtienes al hacer login. Esto aplicará el token a todas las peticiones de la colección.
+
+## 2. Endpoints
+
+### Usuarios
+
+#### `POST /api/v1/users/register`
+- **Descripción**: Registra un nuevo usuario.
+- **Body** (raw, JSON):
+  ```json
+  {
+    "username": "tu_usuario",
+    "password": "tu_password"
+  }
+  ```
+
+#### `POST /api/v1/users/login`
+- **Descripción**: Inicia sesión y obtiene un token JWT.
+- **Body** (raw, JSON):
+  ```json
+  {
+    "username": "tu_usuario",
+    "password": "tu_password"
+  }
+  ```
+- **Nota**: Copia el token de la respuesta para usarlo en las rutas protegidas.
+
+### Proyectos (Requieren Token)
+
+#### `GET /api/v1/proyectos`
+- **Descripción**: Obtiene la lista de tus proyectos.
+
+#### `POST /api/v1/proyectos`
+- **Descripción**: Crea un nuevo proyecto.
+- **Body** (raw, JSON):
+  ```json
+  {
+    "nombre": "Mi primer proyecto",
+    "descripcion": "Este es un proyecto de ejemplo"
+  }
+  ```
+
+#### `GET /api/v1/proyectos/:id`
+- **Descripción**: Obtiene un proyecto por su ID.
+- **Nota**: Reemplaza `:id` con el ID de un proyecto existente.
+
+#### `PUT /api/v1/proyectos/:id`
+- **Descripción**: Actualiza un proyecto.
+- **Body** (raw, JSON):
+  ```json
+  {
+    "nombre": "Proyecto actualizado"
+  }
+  ```
+
+#### `DELETE /api/v1/proyectos/:id`
+- **Descripción**: Elimina un proyecto.
+
+### Tareas (Requieren Token)
+
+#### `GET /api/v1/tareas`
+- **Descripción**: Obtiene todas tus tareas.
+- **Query Params (opcional)**:
+  - `proyectoId`: `<id_del_proyecto>` para filtrar por proyecto.
+
+#### `POST /api/v1/tareas`
+- **Descripción**: Crea una nueva tarea.
+- **Body** (raw, JSON):
+  ```json
+  {
+    "proyectoId": "<id_del_proyecto>",
+    "descripcion": "Hacer la compra"
+  }
+  ```
+
+#### `GET /api/v1/tareas/:id`
+- **Descripción**: Obtiene una tarea por su ID.
+
+#### `PUT /api/v1/tareas/:id`
+- **Descripción**: Actualiza una tarea. Puedes cambiar la descripción o marcarla como completada.
+- **Body** (raw, JSON):
+  ```json
+  {
+    "descripcion": "Comprar leche y pan",
+    "completada": true
+  }
+  ```
+
+#### `DELETE /api/v1/tareas/:id`
+- **Descripción**: Elimina una tarea.
